@@ -124,7 +124,7 @@ function createWindow() {
 	const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize	
 	// Create the browser window.
 	win = new BrowserWindow({
-			title: 'Espacio Onda',
+			title: 'Navegador Espacio Onda',
 			width: width, height: height,
 			icon: __dirname + '/Material Icons_e2bd_256.png',			
 			webPreferences: {
