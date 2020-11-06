@@ -207,10 +207,10 @@ autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
 
 app.on('ready', () => {	
 	createWindow();	
-	setInterval(() => {
-		autoUpdater.checkForUpdatesAndNotify();	
+	// setInterval(() => {
+	// 	autoUpdater.checkForUpdatesAndNotify();	
 
-	}, 60000);
+	// }, 60000);
 
 	
 
