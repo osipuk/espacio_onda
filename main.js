@@ -1,13 +1,9 @@
 const electron = require('electron');
 const {app, BrowserWindow, Menu, dialog  } = require('electron');
-
-const path = require('path')
-// const url = require('url')
+const path = require('path');
 const { autoUpdater } = require('electron-updater');
-// require('update-electron-app')();
-let pluginName
 
-
+let pluginName;
 switch (process.platform) {
 	case 'win32':
 		pluginName = 'flash/pepflashplayer64_32_0_0_293.dll'
@@ -19,7 +15,6 @@ switch (process.platform) {
 		pluginName = 'flash/libpepflashplayer.so';
 		break;
 }
-
 app.commandLine.appendSwitch('ppapi-flash-path', path.join(__dirname, '/../', pluginName));
 app.commandLine.appendSwitch('ppapi-flash-version', '32.0.0.445')
 
@@ -62,9 +57,7 @@ const menuTemplate = [
 			 role: 'zoomout'
 		  }
 	   ]
-	},
-	
-	 
+	},	 
 	{
 	  label : "Ventana",
 	  submenu: [
@@ -85,7 +78,7 @@ const menuTemplate = [
 		   role: 'close'
 		 }
 	  ]
-   },
+    },
 	{
 	   label : "Ayuda",     
 	   submenu: [
@@ -105,14 +98,15 @@ const menuTemplate = [
 		},{
 		  label: 'Info Licencia',
 		  click :   () => {
-			showAbout();
+			showInfoLicencia();
 		   
 		  }      
 		}
 	   ]
 	}
   ]
-  function showAbout() {
+
+  function showInfoLicencia() {
 	dialog.showMessageBox({
 	 title: `Info Licencia`,
 	 message: `esta es la información de la licencia!`,
@@ -121,8 +115,7 @@ const menuTemplate = [
    }
   
 function createWindow() {	
-	const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize	
-	// Create the browser window.
+	const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize;	
 	win = new BrowserWindow({
 			title: 'Navegador Espacio Onda',
 			width: width, height: height,
@@ -150,16 +143,14 @@ function createWindow() {
 	// Emitted when the window is closed.
 	win.on('closed', () => {		
 		win = null;
-  });
+  	});
   
-  win.once('ready-to-show', () => {
-	autoUpdater.checkForUpdatesAndNotify();
-  });
+	win.once('ready-to-show', () => {
+		autoUpdater.checkForUpdatesAndNotify();
+	});
 
+};
 
-
-}
-;
 autoUpdater.on('update-available', (e) => {
   console.error("update-available.."+e)
   dialog.showMessageBox(win, {
@@ -167,8 +158,8 @@ autoUpdater.on('update-available', (e) => {
     buttons: ["Cerrar"],
     message: "Hay una nueva actualización disponible. Descargando ahora ..."
   })
-
 });
+
 autoUpdater.on('update-downloaded', () => {
   let response = dialog.showMessageBox(win, {
     buttons: ["Reiniciar","Cerrar"],
@@ -199,16 +190,15 @@ autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
 	})
   })
 
-  autoUpdater.on('error', message => {
+autoUpdater.on('error', message => {
 	console.error('There was a problem updating the application')
 	console.error(message)
-  })
+})
 
 app.on('ready', () => {	
 	createWindow();	
 });
 
-// Quit when all windows are closed.
 app.on('window-all-closed', () => {	
 	if (process.platform !== 'darwin') {
 		app.quit();
@@ -220,7 +210,3 @@ app.on('activate', () => {
 		createWindow();
 	}
 });
-
-
-
-
