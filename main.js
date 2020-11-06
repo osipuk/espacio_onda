@@ -47,7 +47,7 @@ const menuTemplate = [
 			label: "Recarga",
 			 role: 'reload'
 		  },
-		  {  label: "dev",role: 'toggledevtools' },
+		//   {  label: "dev",role: 'toggledevtools' },
 		  { type: 'separator' },
 		  {
 			label: "Tamaño original",
@@ -164,19 +164,18 @@ autoUpdater.on('update-available', (e) => {
   console.error("update-available.."+e)
   dialog.showMessageBox(win, {
 	type: 'info',
-    buttons: ["Cancel"],
-    message: "A new update version  is available. Downloading now..."
+    buttons: ["Cerrar"],
+    message: "Hay una nueva actualización disponible. Descargando ahora ..."
   })
-  console.error("downloading....")
+
 });
 autoUpdater.on('update-downloaded', () => {
   let response = dialog.showMessageBox(win, {
-    buttons: ["Yes","Cancel"],
-    message: "A new update version "+app.getVersion()+" is downloaded! It will be installed on restart. Restart now?"
+    buttons: ["Reiniciar","Cerrar"],
+    message: "Actualización descargada. Se instalará al reiniciar. ¿Reiniciar ahora?"
   },(res, checked) => {
     if (res === 0){
-      autoUpdater.quitAndInstall();
-      console.log("App restart for version update....")
+      autoUpdater.quitAndInstall();      
     }else if (res === 1) {
      //No button pressed
     }else if (res === 2){
@@ -207,14 +206,6 @@ autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
 
 app.on('ready', () => {	
 	createWindow();	
-	// setInterval(() => {
-	// 	autoUpdater.checkForUpdatesAndNotify();	
-
-	// }, 60000);
-
-	
-
-
 });
 
 // Quit when all windows are closed.
