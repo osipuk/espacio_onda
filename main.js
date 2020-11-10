@@ -1,7 +1,9 @@
 const electron = require('electron');
 const {app, BrowserWindow, Menu, dialog  } = require('electron');
 const path = require('path');
+const url = require('url')
 const { autoUpdater } = require('electron-updater');
+const { info } = require('console');
 
 let pluginName;
 switch (process.platform) {
@@ -42,7 +44,7 @@ const menuTemplate = [
 			label: "Recarga",
 			 role: 'reload'
 		  },
-		//   {  label: "dev",role: 'toggledevtools' },
+		  {  label: "dev",role: 'toggledevtools' },
 		  { type: 'separator' },
 		  {
 			label: "Tamaño original",
@@ -107,12 +109,25 @@ const menuTemplate = [
   ]
 
   function showInfoLicencia() {
-	dialog.showMessageBox({
-	 title: `Info Licencia`,
-	 message: `esta es la información de la licencia!`,
-	 buttons: []
-	});
-   }
+	let child = new BrowserWindow({ 
+		parent: win, 
+		modal: true, 
+		show: false,
+		title: 'Info Licencia',
+		icon: __dirname + '/Material Icons_e2bd_256.png'
+	 });
+
+	child.loadURL(url.format ({
+		pathname: path.join(__dirname, 'license.html'),
+		protocol: 'file:',
+		slashes: true
+	}));
+	child.once('ready-to-show', () => {
+	  child.show();
+	  child.removeMenu();
+	})
+  }
+ 
   
 function createWindow() {	
 	const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize;	
@@ -148,6 +163,16 @@ function createWindow() {
 	win.once('ready-to-show', () => {
 		autoUpdater.checkForUpdatesAndNotify();
 	});
+
+
+	win.webContents.on('new-window', (event, url) => {
+		console.log("thanks")
+		// event.preventDefault()
+		// const win = new BrowserWindow({show: false})
+		// win.once('ready-to-show', () => win.show())
+		// win.loadURL(url)
+		// event.newGuest = win
+	  })
 
 };
 
