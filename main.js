@@ -18,7 +18,7 @@ switch (process.platform) {
 		break;
 }
 app.commandLine.appendSwitch('ppapi-flash-path', path.join(__dirname, '/../', pluginName));
-app.commandLine.appendSwitch('ppapi-flash-version', '32.0.0.445')
+app.commandLine.appendSwitch('ppapi-flash-version', '32.0.0.293')
 
 let win;
 const menuTemplate = [
@@ -134,7 +134,7 @@ function createWindow() {
 	win = new BrowserWindow({
 			title: 'Navegador Espacio Onda',
 			width: width, height: height,
-			icon: __dirname + '/Material Icons_e2bd_256.png',			
+			icon: __dirname + '/icon.png',			
 			webPreferences: {
 				nodeIntegration: true,
 				webSecurity: false,
@@ -165,14 +165,6 @@ function createWindow() {
 	});
 
 
-	win.webContents.on('new-window', (event, url) => {
-		console.log("thanks")
-		// event.preventDefault()
-		// const win = new BrowserWindow({show: false})
-		// win.once('ready-to-show', () => win.show())
-		// win.loadURL(url)
-		// event.newGuest = win
-	  })
 
 };
 
